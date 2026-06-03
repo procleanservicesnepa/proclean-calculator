@@ -55,13 +55,14 @@
     .pcs-wrap .zip-status.detected { color: #00e5cc; }
     .pcs-wrap .zip-status.error { color: #ff00cc; }
     .pcs-wrap .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 6px; }
-    .pcs-wrap .card { background: #111; border: 1px solid #222; border-radius: 10px; overflow: hidden; }
+    .pcs-wrap .card { background: #111; border: 1px solid #222; border-radius: 10px; overflow: visible; position: relative; }
     .pcs-wrap .card-body { padding: 0.85rem 1rem; }
+    .pcs-wrap .card svg { border-radius: 10px 10px 0 0; overflow: hidden; display: block; }
     .pcs-wrap .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 3px; }
     .pcs-wrap .card-title { font-size: 13px; font-weight: 700; color: #fff; }
     .pcs-wrap .info-wrap { position: relative; display: inline-block; }
     .pcs-wrap .info-btn { width: 18px; height: 18px; border-radius: 50%; border: 1px solid #444; background: transparent; color: #666; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 6px; }
-    .pcs-wrap .tooltip { display: none; position: absolute; right: 0; top: 22px; background: #1e1e1e; border: 1px solid #333; border-radius: 8px; padding: 10px 12px; font-size: 11px; color: #ccc; line-height: 1.5; width: 210px; z-index: 100; text-align: left; }
+    .pcs-wrap .tooltip { display: none; position: absolute; right: 0; top: 22px; background: #1e1e1e; border: 1px solid #333; border-radius: 8px; padding: 10px 12px; font-size: 11px; color: #ccc; line-height: 1.5; width: 210px; z-index: 999; text-align: left; box-shadow: 0 4px 16px rgba(0,0,0,0.5); }
     .pcs-wrap .info-wrap:hover .tooltip { display: block; }
     .pcs-wrap .card-desc { font-size: 11px; color: #777; margin-bottom: 10px; line-height: 1.4; }
     .pcs-wrap .counter { display: flex; align-items: center; gap: 8px; }
