@@ -591,11 +591,12 @@
     if(el) el.value=n;
   }
 
-  // Apply to all windows: sets addon count to single + double hung total
+  // Apply to all windows: screens = 1 per window, grills & french = 2 per window (double hung has 2 panels)
   function applyAll(k){
     var total=pcs.counts.single+pcs.counts.double;
     if(total===0){alert('Add some windows first, then use this button to apply to all of them.');return;}
-    setVal(k,total);
+    var multiplier=(k==='grill'||k==='french')?2:1;
+    setVal(k,total*multiplier);
     calc();
   }
 
