@@ -453,6 +453,7 @@
       <div class="summary-row addon-row"><span>Removable grills (<span id="s-grill">0</span>)</span><span id="p-grill" class="zero">$0.00</span></div>
       <div class="summary-row addon-row"><span>French panes (<span id="s-french">0</span>)</span><span id="p-french" class="zero">$0.00</span></div>
       <div class="summary-row storefront-row" style="display:none;"><span>Storefront panels (<span id="s-storefront">0</span>)</span><span id="p-storefront" class="zero">$0.00</span></div>
+      <div class="summary-row tax-row" id="tax-row" style="display:none;"><span id="tax-label">NY Sales Tax</span><span id="p-tax" class="zero">$0.00</span></div>
     </div>
     <div class="summary-row total"><span>Estimated range</span><span id="p-total">$0.00</span></div>
     <p class="range-note" id="range-note" style="display:none;">Your final price will fall within this range depending on actual window condition.</p>
@@ -464,6 +465,7 @@
 
 
 
+  <div class="lead-form">
     <h3>Ready to book? Send us your estimate.</h3>
     <p>We'll reach out to confirm your appointment. No obligation — just tell us a little about your job.</p>
     <div class="form-grid">
@@ -499,7 +501,7 @@
     <div class="section-label">Frequently asked questions</div>
     <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How much does window cleaning cost in Pennsylvania?<span class="faq-icon">+</span></div><div class="faq-a">Window cleaning costs vary based on window type, quantity, and condition. Pro Clean Services NEPA has a $200 minimum for residential and commercial jobs and a $25 minimum for storefronts. Use the calculator above to get an instant estimate range for your specific windows.</div></div>
     <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Why does the calculator show a range instead of an exact price?<span class="faq-icon">+</span></div><div class="faq-a">Window cleaning prices can vary based on the actual condition of your windows, accessibility, and other factors we can only assess on-site. The lower end of the range reflects standard conditions, while the upper end accounts for additional complexity. Your final price will be confirmed before any work begins.</div></div>
-    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do you charge sales tax on window cleaning?<span class="faq-icon">+</span></div><div class="faq-a">Sales tax, when applicable, will be calculated and communicated to you before final booking. We'll make sure everything is clear before any work begins.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do you charge sales tax on window cleaning?<span class="faq-icon">+</span></div><div class="faq-a">Window cleaning performed in New York is subject to NY state and county sales tax (currently 8% in our NY service area), which is automatically included in your estimate above once you enter a New York zip code. For Pennsylvania jobs, sales tax when applicable will be calculated and communicated to you before final booking.</div></div>
     <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What areas does Pro Clean Services NEPA serve?<span class="faq-icon">+</span></div><div class="faq-a">Pro Clean Services NEPA is based in Honesdale, PA and serves Pike County, Wayne County, and Lackawanna County in Pennsylvania, as well as Sullivan County and Delaware County in New York. Call us at (570) 470-4330 if you're unsure whether we cover your area.</div></div>
     <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the interior ladder surcharge?<span class="faq-icon">+</span></div><div class="faq-a">Some windows — such as those in stairwells, cathedral ceilings, or high interior spaces — require a ladder to access from the inside. Because this adds setup time and complexity, we apply a per-window surcharge on top of the standard window price.</div></div>
     <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How long does window cleaning take?<span class="faq-icon">+</span></div><div class="faq-a">Timing varies depending on the number of windows, their condition, and the complexity of the job. A smaller job may take a couple of hours, while a larger home or commercial property could take a full day. We'll give you a better time estimate when we confirm your appointment.</div></div>
@@ -523,6 +525,23 @@
 <script>
   var PA_PREFIXES=['150','151','152','153','154','155','156','157','158','159','160','161','162','163','164','165','166','167','168','169','170','171','172','173','174','175','176','177','178','179','180','181','182','183','184','185','186','187','188','189','190','191','192','193','194','195','196'];
   var NY_ZIPS=['12701','12702','12719','12720','12721','12722','12723','12724','12725','12726','12727','12728','12729','12732','12733','12734','12736','12737','12738','12739','12740','12741','12742','12743','12745','12746','12747','12748','12749','12750','12751','12752','12754','12757','12758','12759','12760','12762','12763','12764','12765','12766','12767','12768','12769','12770','12771','12775','12776','12777','12778','12779','12780','12781','12783','12784','12785','12786','12787','12788','12789','12790','12791','12792','13730','13731','13732','13733','13734','13735','13736','13737','13738','13739','13740','13741','13742','13743','13744','13745','13746','13747','13748','13749','13750','13751','13752','13753','13754','13755','13756','13757','13758','13760','13761','13762','13763','13764','13774','13775','13776','13777','13778','13780','13782','13783','13784','13786','13787','13788','13790','13795','13796','13797','13801','13802','13803','13804','13806','13807','13808','13809','13810','13811','13812','13813','13814','13815','13820','13825','13826','13827','13830','13832','13833','13834','13835','13838','13839','13840','13841','13842','13843','13844','13845','13846','13847','13848','13849','13850','13851','13856','13859','13860','13861','13862','13863','13864','13865'];
+
+  // NY combined sales tax rates (state + county + any MCTD surcharge), keyed by 3-digit zip prefix.
+  // Window cleaning is a taxable "maintaining real property" service under NY Tax Law 1105(c)(5),
+  // so this is applied at booking for all current NY service-area zips.
+  // Add new prefixes here if the service area expands into another NY county.
+  var NY_ZIP_TAX_PREFIX={
+    '127':0.08,   // Sullivan County (Callicoon, Jeffersonville, Cochecton, Monticello, Liberty, etc.)
+    '137':0.08,   // Delaware County
+    '138':0.08    // Delaware County
+  };
+  var NY_TAX_DEFAULT=0.08; // fallback if a zip is on the NY_ZIPS list but its prefix isn't mapped above
+
+  function getTaxRate(){
+    if(pcs.loc!=='NY') return 0; // PA tax is not auto-calculated here; handled at booking
+    var prefix=(pcs.zip||'').substring(0,3);
+    return NY_ZIP_TAX_PREFIX[prefix]!==undefined?NY_ZIP_TAX_PREFIX[prefix]:NY_TAX_DEFAULT;
+  }
 
   var pcs={counts:{single:0,double:0,ladder:0,screen:0,grill:0,french:0,storefront:0},loc:'unknown',type:'residential',scope:'both',zip:'',stories:'1'};
 
@@ -563,7 +582,8 @@
       status.textContent='✓ Pennsylvania — sales tax will be applied at booking';
     } else if(state==='NY'){
       status.className='zip-status detected';
-      status.textContent='✓ New York — '+val;
+      var rate=getTaxRate();
+      status.textContent='✓ New York — '+(rate*100).toFixed(3).replace(/\.?0+$/,'')+'% sales tax will be added';
     } else {
       status.className='zip-status error';
       status.textContent='Zip not recognized — call us at (570) 470-4330';
@@ -726,6 +746,23 @@
     var base=minApplied?min:sub;
     var hi=Math.round(base*1.15*100)/100;
 
+    var taxRate=getTaxRate();
+    var taxLo=Math.round(base*taxRate*100)/100;
+    var taxHi=Math.round(hi*taxRate*100)/100;
+    var taxRow=document.getElementById('tax-row');
+    var taxLabel=document.getElementById('tax-label');
+    var taxEl=document.getElementById('p-tax');
+    if(taxRate>0&&sub>0){
+      taxRow.style.display='flex';
+      taxLabel.textContent='NY Sales Tax ('+(taxRate*100).toFixed(3).replace(/\.?0+$/,'')+'%)';
+      taxEl.textContent=fmtRange(taxLo,taxHi);
+      taxEl.className='';
+      base=Math.round((base+taxLo)*100)/100;
+      hi=Math.round((hi+taxHi)*100)/100;
+    } else {
+      taxRow.style.display='none';
+    }
+
     Object.keys(pcs.counts).forEach(function(k){
       var sc=document.getElementById('s-'+k);if(sc)sc.textContent=pcs.counts[k];
       var el=document.getElementById('p-'+k);
@@ -818,6 +855,8 @@
     formData.append('french_panes',pcs.counts.french);
     formData.append('storefront_panels',pcs.counts.storefront);
     formData.append('estimated_range',range);
+    var taxRateApplied=getTaxRate();
+    formData.append('sales_tax_rate',taxRateApplied>0?(taxRateApplied*100).toFixed(3).replace(/\.?0+$/,'')+'%':'N/A (PA or unrecognized zip)');
     if(svcs.length) formData.append('also_interested_in',svcs.join(', '));
     if(notes) formData.append('notes',notes);
     var btn=document.getElementById('submit-btn');
